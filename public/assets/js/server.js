@@ -31,3 +31,6 @@ app.get("/notes", (req,res) => {
 
 //POST to apit/notes should receive a new note to save on the request body, add it to the db.json file, then return new note to client.
 //Note - use a UUID generator
+
+app.listen(PORT, () =>
+console.log(`App listening at http://localhost:${PORT}`));
