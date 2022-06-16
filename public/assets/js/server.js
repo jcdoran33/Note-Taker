@@ -18,8 +18,12 @@ app.use(express.static('public'));
 //main content
 
 //HTML routes:
-//GET /notes - return notes.html
+//GET for main (/)
 
+//GET /notes - return notes.html
+app.get("/notes", (req,res) => {
+    res.sendFile(path.join(__dirname, "public/notes.html"))
+});
 //GET * should return the index.html
 
 //API routes:
