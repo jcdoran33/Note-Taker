@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs");
 //add api const definition (should link to index.js? in routes folder?)
-const api = require("routes/index.js"); //unsure if I need this
+const api = require("./routes/index.js"); //unsure if I need this
 //require UUID for user ID - use uudiv4(); to call
 const { v4: uuidv4 } = require('uuid');
 //variable definitions - app and PORT
@@ -35,8 +35,13 @@ app.get("*", (req, res) => {
 app.get("/api/notes", (req, res) => {
     res.status(200).json(`${req.method} request received to get notes`);
     console.info(`${req.method} requst received to get notes`);
+    //should read db.json, return all saved notes as JSON
+    fs.readFile("/db/db.json", "utf8", (err, data) => {
+        console.log(data);
+        const savedNotes = data;
+    });
 });
-//POST to apit/notes should receive a new note to save on the request body, add it to the db.json file, then return new note to client.
+//POST to api/notes should receive a new note to save on the request body, add it to the db.json file, then return new note to client.
 //Note - use a UUID generator
 
 app.listen(PORT, () =>
