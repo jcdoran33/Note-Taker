@@ -31,6 +31,7 @@ const getNotes = () =>
     headers: {
       'Content-Type': 'application/json',
     },
+    // do I need to add a .then here???????
   });
 
 const saveNote = (note) =>

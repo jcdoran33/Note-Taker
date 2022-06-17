@@ -18,7 +18,7 @@ app.use("/api", api); //unsure if I need this
 //designate the public folder
 app.use(express.static('public'));
 
-//main content
+//main content below
 
 //HTML routes:
 //GET /notes - return notes.html
@@ -31,6 +31,7 @@ app.get("*", (req, res) => {
 });
 
 //API routes:
+//the belo may be unecessary (the readFile part?) just need to return something to getNotes in the other index.js file
 //GET api/notes should read the db.json file, and return all saved noes as JSON
 app.get("/api/notes", (req, res) => {
     res.status(200).json(`${req.method} request received to get notes`);
@@ -39,6 +40,8 @@ app.get("/api/notes", (req, res) => {
     fs.readFile("/db/db.json", "utf8", (err, data) => {
         console.log(data);
         const savedNotes = data;
+        // res.sendFile(path.join(__dirname, "./db/db.json"));
+        return data;
     });
 });
 //POST to api/notes should receive a new note to save on the request body, add it to the db.json file, then return new note to client.
