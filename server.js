@@ -2,8 +2,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
-//add api const definition (should link to index.js? in routes folder?)
-const api = require("./routes/index.js"); //unsure if I need this
+
 //require UUID for user ID - use uudiv4(); to call
 const { v4: uuidv4 } = require('uuid');
 //variable definitions - app and PORT
@@ -14,7 +13,6 @@ const app = express();
 //parse incoming stuff - middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/api", api); //unsure if I need this
 //designate the public folder
 app.use(express.static('public'));
 

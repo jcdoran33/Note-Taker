@@ -1,1 +1,11 @@
-# Note-Taker
+# Note Taker Application
+
+This is a note taking application that will allow the user to create, save, and delete simple, titled notes. It would be useful for taking short notes on a topic of study, or creating short To-do lists. It uses Express.js for routing and saving and loading old notes. 
+
+## Link to Deployed Application:
+
+
+## Screenshot of Application:
+
+![screenshot](screenshot.png)
+
