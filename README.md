@@ -7,6 +7,7 @@ npm install
 
 ## Link to Deployed Application:
 
+https://note-taker-jcd.herokuapp.com/
 
 ## Screenshot of Application:
 
