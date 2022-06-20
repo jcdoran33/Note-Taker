@@ -18,18 +18,15 @@ app.use("/api", api); //unsure if I need this
 //designate the public folder
 app.use(express.static('public'));
 
-//main content below
+//=======main content below=======
 
-//HTML routes:
+//HTML routes (catch-all moved to bottom):
 //GET /notes - return notes.html
 app.get("/notes", (req, res) => {
     res.sendFile(path.join(__dirname, "public/notes.html"))
 });
 
-
-
 //API routes:
-//the below may be unecessary (the readFile part?) just need to return something to getNotes in the other index.js file
 //GET api/notes should read the db.json file, and return all saved notes as JSON
 app.get("/api/notes", (req, res) => {
     let notes = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
@@ -40,15 +37,21 @@ app.get("/api/notes", (req, res) => {
 //POST to api/notes should receive a new note to save on the request body, add it to the db.json file, then return new note to client.
 //Note - use a UUID generator
 app.post("/api/notes", (req, res) => {
+    //save current contents of db.json as a variable oldNotes
     let oldNotes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+    //save the body of the incoming request as a variable "newNote"
     let newNote = req.body;
+    //add a unique ID to each new note, using "id" key
     newNote.id = uuidv4();
+    //push the new Note to the oldNotes array
     oldNotes.push(newNote);
+    //now rewrite the db.json file, with the new combined array, oldNotes
     fs.writeFileSync("./db/db.json", JSON.stringify(oldNotes));
-    res.json(oldNotes)
+    //return the contents of db.json/oldNotes
+    res.json(oldNotes);
 });
 
-//DELETE
+//DELETE a note
 app.delete("/api/notes/:id", (req, res) => {
     let noteId = req.params.id;
     let oldNotes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
@@ -58,14 +61,14 @@ app.delete("/api/notes/:id", (req, res) => {
             newArray.push(oldNotes[i]);
         }
     };
-
-    //.map() .filter()
-    //let updatedNotes = oldNotes.filter((note) => note.id != noteId)
-
     fs.writeFileSync("./db/db.json", JSON.stringify(newArray));
     res.json(newArray);
+    //could also use .filter instead?
+    //.filter()
+    //let updatedNotes = oldNotes.filter((note) => note.id != noteId)
 });
 
+//catch-all
 //GET * should return the index.html
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "public/index.html"))
