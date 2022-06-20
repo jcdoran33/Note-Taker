@@ -32,30 +32,10 @@ app.get("/notes", (req, res) => {
 //the below may be unecessary (the readFile part?) just need to return something to getNotes in the other index.js file
 //GET api/notes should read the db.json file, and return all saved notes as JSON
 app.get("/api/notes", (req, res) => {
-    // res.status(200).json(`${req.method} request received to get notes`);
-    // console.info(`${req.method} request received to get notes`);
-    // //should read db.json, return all saved notes as JSON
-    // fs.readFile("/db/db.json", "utf8", (err, data) => {
-    //     if (err){
-    //         console.error(err);
-    //     } else {
-    //     console.log(data);
-    //     const savedNotes = JSON.parse(data);
-    //     // res.sendFile(path.join(__dirname, "./db/db.json"));
-    //     return savedNotes; // should there be .then here instead of return?
-    //     }
-    // })
-    // .then((savedNotes) => res.json(savedNotes));
-
     let notes = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
     res.json(notes);
 
 });
-
-//trying simpler method below (where we will manipulate in index.js instead of here)
-// app.get("/api/notes", (req, res) => {
-//     res.sendFile(path.join(__dirname, "db/db.json"));
-// });
 
 //POST to api/notes should receive a new note to save on the request body, add it to the db.json file, then return new note to client.
 //Note - use a UUID generator
